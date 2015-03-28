@@ -171,7 +171,10 @@ var pointsConfig = {
     type: "BlueprintOutputPoints",
     options: {
       name: "Restauraunt Inspections",
-      defaultColor: 0x00ff00
+      color: 0x00ff00,
+      width: 5,
+      height: 40,
+      depth: 5
     }
   },
   triggers: [{
@@ -197,7 +200,8 @@ var pointsConfig = {
         itemsProperties: "features",
         // Return a new object for each item with the given properties
         transformation: {
-          coordinates: "geometry.coordinates"
+          coordinates: "geometry.coordinates",
+          properties: "properties"
         }
       }
     }

@@ -10094,7 +10094,10 @@ if (typeof window === undefined) {
 
     _.defaults(self.options, {
       name: "Points",
-      defaultColor: 0xff0000
+      color: 0xff0000,
+      width: 40,
+      height: 1000,
+      depth: 40
     });
 
     // Triggers and actions reference
@@ -10127,14 +10130,14 @@ if (typeof window === undefined) {
     var self = this;
 
     var material = new THREE.MeshBasicMaterial({
-      color: self.options.defaultColor,
+      color: self.options.color,
       // vertexColors: THREE.VertexColors,
       // ambient: 0xffffff,
       // emissive: 0xcccccc,
       shading: THREE.FlatShading
     });
 
-    var barGeom = new THREE.BoxGeometry( 40, 1, 40 );
+    var barGeom = new THREE.BoxGeometry( self.options.width, 1, self.options.depth );
 
     // Shift each vertex by half the bar height
     // This means it will scale from the bottom rather than the centre
@@ -10149,14 +10152,14 @@ if (typeof window === undefined) {
       var coords = point.coordinates;
 
       var offset = new VIZI.Point();
-      console.log(point,coords)
+
       var geoCoord = self.world.project(new VIZI.LatLon(coords[1], coords[0]));
 
       offset.x = -1 * geoCoord.x;
       offset.y = -1 * geoCoord.y;
 
       // TODO: Get this from options
-      var height = 1000;
+      var height = self.options.height;
 
       var mesh = new THREE.Mesh(barGeom);
 
