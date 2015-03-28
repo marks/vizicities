@@ -1,0 +1,93 @@
+{
+"type": "FeatureCollection",
+"features": [
+{
+"type": "Feature",
+"geometry": {
+"type": "Point",
+"coordinates": [
+-77.0407,
+39.0089
+]
+},
+"properties": {
+"organization": "HUI FEN CHEN",
+"city": "SILVER SPRING",
+"name": "MAYFLOWER RESTAURANT",
+"violation7a": "In Compliance",
+"latitude": "39.0089",
+"zip": "20910",
+"violationsmoking": "In Compliance",
+"violation6a": "In Compliance",
+"violation7b": "In Compliance",
+"violation20": "In Compliance",
+"violation5": "In Compliance",
+"violation2": "In Compliance",
+"violation1": "In Compliance",
+"address2": null,
+"longitude": "-77.0407",
+"violation8": "In Compliance",
+"violation6b": "In Compliance",
+"violation9": "In Compliance",
+"violation4": "In Compliance",
+"inspectiontype": "Monitoring",
+"violationtransfat": "In Compliance",
+"address1": "1905 SEMINARY RD",
+"category": "Restaurant",
+"inspectionresults": "Critical Violations Corrected",
+"inspectiondate": "2015-03-11T00:00:00.000",
+"type": "Food",
+"violation3": "In Compliance",
+"violation22": "In Compliance",
+"violationmenu": "Not applicable"
+}
+},
+{
+"type": "Feature",
+"geometry": {
+"type": "Point",
+"coordinates": [
+-77.0397,
+38.9993
+]
+},
+"properties": {
+"organization": "ADF MID ATLANTIC, LLC.",
+"city": "SILVER SPRING",
+"name": "PIZZA HUT #23579",
+"violation7a": "In Compliance",
+"latitude": "38.9993",
+"zip": "20910",
+"violationsmoking": "In Compliance",
+"violation6a": "In Compliance",
+"violation7b": "In Compliance",
+"violation20": "In Compliance",
+"violation5": "In Compliance",
+"violation2": "In Compliance",
+"violation1": "In Compliance",
+"address2": null,
+"longitude": "-77.0397",
+"violation8": "In Compliance",
+"violation6b": "In Compliance",
+"violation9": "In Compliance",
+"violation4": "Out of Compliance",
+"inspectiontype": "Complaint Invest w/Comprehensive",
+"violationtransfat": "In Compliance",
+"address1": "8607 16TH ST.",
+"category": "Restaurant",
+"inspectionresults": "Critical Violations Corrected",
+"inspectiondate": "2015-03-11T00:00:00.000",
+"type": "Food",
+"violation3": "In Compliance",
+"violation22": "In Compliance",
+"violationmenu": "Not applicable"
+}
+}
+],
+"crs": {
+"type": "name",
+"properties": {
+"name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+}
+}
+}
