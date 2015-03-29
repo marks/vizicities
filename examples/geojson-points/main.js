@@ -3,8 +3,10 @@ var world = new VIZI.World({
   layersUI: true,
   picking: true,
   center: new VIZI.LatLon(38.9966, -77.0304), // Silver Spring, MD
+  camera: new VIZI.Camera({far: 40000*1000, aspect: document.querySelector("#vizicities-viewport").clientWidth / document.querySelector("#vizicities-viewport").clientHeight})
 });
-world.scene.scene.fog.far = 15000*10;
+world.scene.scene.fog.far = 15000*1000;
+
 var controls = new VIZI.ControlsMap(world.camera, {
   viewport: world.options.viewport
 });
@@ -32,10 +34,10 @@ var mapConfig = {
         zoom: 19,
         tilesPerDirection: 3,
         cullZoom: 17
-      }, {
-        zoom: 18,
-        tilesPerDirection: 3,
-        cullZoom: 16
+      // }, {
+      //   zoom: 18,
+      //   tilesPerDirection: 3,
+      //   cullZoom: 16
       }, {
         zoom: 17,
         tilesPerDirection: 3,
@@ -44,10 +46,10 @@ var mapConfig = {
         zoom: 16,
         tilesPerDirection: 3,
         cullZoom: 14
-      }, {
-        zoom: 15,
-        tilesPerDirection: 3,
-        cullZoom: 13
+      // }, {
+      //   zoom: 15,
+      //   tilesPerDirection: 3,
+      //   cullZoom: 13
       }, {
         zoom: 14,
         tilesPerDirection: 3,
@@ -56,10 +58,10 @@ var mapConfig = {
         zoom: 13,
         tilesPerDirection: 3,
         cullZoom: 10
-      }, {
-        zoom: 12,
-        tilesPerDirection: 3,
-        cullZoom: 8
+      // }, {
+      //   zoom: 12,
+      //   tilesPerDirection: 3,
+      //   cullZoom: 8
       }, {
         zoom: 11,
         tilesPerDirection: 3,
@@ -68,13 +70,25 @@ var mapConfig = {
         zoom: 10,
         tilesPerDirection: 3,
         cullZoom: 4
-      }, {
-        zoom: 9,
-        tilesPerDirection: 5,
-        cullZoom: 2
+      // }, {
+      //   zoom: 9,
+      //   tilesPerDirection: 5,
+      //   cullZoom: 3
       }, {
         zoom: 8,
         tilesPerDirection: 5,
+        cullZoom: 3
+      }, {
+        zoom: 7,
+        tilesPerDirection: 5,
+        cullZoom: 3
+      }, {
+        zoom: 5,
+        tilesPerDirection: 5,
+        cullZoom: 3
+      }, {
+        zoom: 3,
+        tilesPerDirection: 2,
         cullZoom: 2
       }]
     }
