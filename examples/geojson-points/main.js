@@ -162,6 +162,11 @@ switchboardBuildings.addToWorld(world);
 
 d3.json("./data/sample.geojson", function(geoJsonObject){
   // manipulate geoJsonObject object here ... for assigning colors and other attributes, for example
+  _.each(geoJsonObject.features, function(point){
+    if(point.properties.inspectionresults == "Critical Violations Corrected"){
+      point.properties.pointColor = 0xffff00
+    }
+  });
   var pointsConfig = {
     input: {
       type: "BlueprintInputGeoJSON",
