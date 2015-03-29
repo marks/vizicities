@@ -68,12 +68,16 @@
 
       var combinedGeom = new THREE.Geometry();
 
-      if(point.properties.color === undefined){
-        point.properties.color = self.options.defaultColor
+      if(point.properties.inspectionresults == "Critical Violations Corrected"){
+        point.properties.pointColor = 0xff0000
+      }
+
+      if(point.properties.pointColor === undefined){
+        point.properties.pointColor = self.options.defaultColor
       }
 
       var material = new THREE.MeshBasicMaterial({
-        color: point.properties.color,
+        color: point.properties.pointColor,
         // vertexColors: THREE.VertexColors,
         // ambient: 0xffffff,
         // emissive: 0xcccccc,
