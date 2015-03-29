@@ -14,8 +14,8 @@ var pickControls = new VIZI.ControlsMousePick(world.camera, {
 });
 
 var descriptionUI = new VIZI.DescriptionUI({
-  title: "Basic example",
-  body: "This is a basic example showing a 2D basemap, 3D building tiles and a choropleth of population density."
+  title: "Basic Points from GeoJSON",
+  body: "This is a basic example showing a 2D basemap, 3D building tiles and plotted points from a GeoJSON payload."
 });
 
 var mapConfig = {
