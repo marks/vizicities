@@ -2,9 +2,9 @@ var world = new VIZI.World({
   viewport: document.querySelector("#vizicities-viewport"),
   layersUI: true,
   picking: true,
-  center: new VIZI.LatLon(38.9966, -77.0304) // Silver Spring, MD
+  center: new VIZI.LatLon(38.9966, -77.0304), // Silver Spring, MD
 });
-
+world.scene.scene.fog.far = 15000*10;
 var controls = new VIZI.ControlsMap(world.camera, {
   viewport: world.options.viewport
 });
@@ -54,8 +54,28 @@ var mapConfig = {
         cullZoom: 12
       }, {
         zoom: 13,
+        tilesPerDirection: 3,
+        cullZoom: 10
+      }, {
+        zoom: 12,
+        tilesPerDirection: 3,
+        cullZoom: 8
+      }, {
+        zoom: 11,
+        tilesPerDirection: 3,
+        cullZoom: 6
+      }, {
+        zoom: 10,
+        tilesPerDirection: 3,
+        cullZoom: 4
+      }, {
+        zoom: 9,
         tilesPerDirection: 5,
-        cullZoom: 11
+        cullZoom: 2
+      }, {
+        zoom: 8,
+        tilesPerDirection: 5,
+        cullZoom: 2
       }]
     }
   },
@@ -160,7 +180,34 @@ var buildingsConfig = {
 var switchboardBuildings = new VIZI.BlueprintSwitchboard(buildingsConfig);
 switchboardBuildings.addToWorld(world);
 
-d3.json("./data/sample.geojson", function(geoJsonObject){
+// BEGIN example specific code 
+// var urlToData = "./data/sample.geojson"
+var urlToData = "https://data.medicare.gov/resource/dgck-syfz.json?$limit=5000&state=MD&hcahps_question=Patients%20who%20reported%20YES,%20they%20would%20definitely%20recommend%20the%20hospital"
+var geoJsonObject;
+d3.json(urlToData, function(jsonObject){
+  if(jsonObject.type == "FeatureCollection"){ // already GeoJSON
+    geoJsonObject = jsonObject
+  } else { // not GeoJSON, we need to make it so.. let's assume CRS84 lat/lon projection
+    geoJsonObject = {type:"FeatureCollection",features:[],crs:{type:"name",properties:{name:"urn:ogc:def:crs:OGC:1.3:CRS84"}}}
+    // loop through originally returned features 
+    _.each(jsonObject, function(origFeature){
+      var newFeature = {type:"Feature",geometry:{}}
+      // construct feature geometry
+      newFeature.geometry.type = "Point"
+      if(origFeature.location.longitude && origFeature.location.latitude){
+        newFeature.geometry.coordinates = [parseFloat(origFeature.location.longitude), parseFloat(origFeature.location.latitude)]  
+      } else {
+        newFeature.geometry.coordinates = [0,0]  
+      }
+      // construct feature properties
+      newFeature.properties = origFeature
+      // add feature to the feature collection
+      geoJsonObject.features.push(newFeature)
+    })
+  }
+
+  console.log(geoJsonObject)
+
   // manipulate geoJsonObject object here ... for assigning colors and other attributes, for example
   _.each(geoJsonObject.features, function(point){
     if(point.properties.inspectionresults == "Critical Violations Corrected"){
@@ -185,9 +232,9 @@ d3.json("./data/sample.geojson", function(geoJsonObject){
       options: {
         name: "Restauraunt Inspections",
         defaultColor: 0x00ff00,
-        width: 5,
-        height: 40,
-        depth: 5
+        width: 10,
+        height: 100,
+        depth: 10
       }
     },
     triggers: [{
@@ -224,6 +271,8 @@ d3.json("./data/sample.geojson", function(geoJsonObject){
   var switchboardPoints = new VIZI.BlueprintSwitchboard(pointsConfig);
   switchboardPoints.addToWorld(world);
 })
+
+// END example specific code
 
 var clock = new VIZI.Clock();
 
