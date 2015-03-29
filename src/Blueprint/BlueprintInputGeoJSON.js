@@ -10,7 +10,8 @@
   // input: {
   //   type: "BlueprintInputGeoJSON",
   //   options: {
-  //     path: "/data/tower-hamlets-lsoa-census.geojson"
+  //     path: "/data/tower-hamlets-lsoa-census.geojson",
+  //     jsObj: geojsonJsObject 
   //     // tilePath: "http://vector.mapzen.com/osm/buildings/{z}/{x}/{y}.json"
   //   }
   // }
@@ -49,20 +50,25 @@
   VIZI.BlueprintInputGeoJSON.prototype.requestData = function() {
     var self = this;
 
-    if (!self.options.path) {
-      throw new Error("Required path option missing");
+    if (!self.options.path && !self.options.jsObj ) {
+      throw new Error("Required path or jsObj option missing");
     }
 
-    // Request data
-    d3.json(self.options.path, function(error, data) {
-      if (error) {
-        if (VIZI.DEBUG) console.log("Failed to request GeoJSON data");
-        console.warn(error);
-        return;
-      }
-      
-      self.emit("dataReceived", data);
-    });
+    if(self.options.path){
+      // Request data
+      d3.json(self.options.path, function(error, data) {
+        if (error) {
+          if (VIZI.DEBUG) console.log("Failed to request GeoJSON data");
+          console.warn(error);
+          return;
+        }
+        
+        self.emit("dataReceived", data);
+      });      
+    }
+    else if(typeof(self.options.jsObj) == "object"){
+      self.emit("dataReceived", self.options.jsObj);
+    };
   };
 
   // [{

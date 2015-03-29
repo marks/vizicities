@@ -160,56 +160,59 @@ var buildingsConfig = {
 var switchboardBuildings = new VIZI.BlueprintSwitchboard(buildingsConfig);
 switchboardBuildings.addToWorld(world);
 
-var pointsConfig = {
-  input: {
-    type: "BlueprintInputGeoJSON",
-    options: {
-      path: "./data/sample.geojson"
-    }
-  },
-  output: {
-    type: "BlueprintOutputPoints",
-    options: {
-      name: "Restauraunt Inspections",
-      defaultColor: 0x00ff00,
-      width: 5,
-      height: 40,
-      depth: 5
-    }
-  },
-  triggers: [{
-    triggerObject: "output",
-    triggerName: "initialised",
-    triggerArguments: [],
-    actionObject: "input",
-    actionName: "requestData",
-    actionArguments: [],
-    actionOutput: {}
-  }, {
-    triggerObject: "input",
-    triggerName: "dataReceived",
-    triggerArguments: ["geoJSON"],
-    actionObject: "output",
-    actionName: "outputPoints",
-    actionArguments: ["data"],
-    actionOutput: {
-      data: {
-        // Loop through each item in trigger.geoJSON and return a new array of processed values (a map)
-        process: "map",
-        itemsObject: "geoJSON",
-        itemsProperties: "features",
-        // Return a new object for each item with the given properties
-        transformation: {
-          coordinates: "geometry.coordinates",
-          properties: "properties"
+d3.json("./data/sample.geojson", function(geoJsonObject){
+  // manipulate geoJsonObject object here ... for assigning colors and other attributes, for example
+  var pointsConfig = {
+    input: {
+      type: "BlueprintInputGeoJSON",
+      options: {
+        jsObj: geoJsonObject 
+      }
+    },
+    output: {
+      type: "BlueprintOutputPoints",
+      options: {
+        name: "Restauraunt Inspections",
+        defaultColor: 0x00ff00,
+        width: 5,
+        height: 40,
+        depth: 5
+      }
+    },
+    triggers: [{
+      triggerObject: "output",
+      triggerName: "initialised",
+      triggerArguments: [],
+      actionObject: "input",
+      actionName: "requestData",
+      actionArguments: [],
+      actionOutput: {}
+    }, {
+      triggerObject: "input",
+      triggerName: "dataReceived",
+      triggerArguments: ["geoJSON"],
+      actionObject: "output",
+      actionName: "outputPoints",
+      actionArguments: ["data"],
+      actionOutput: {
+        data: {
+          // Loop through each item in trigger.geoJSON and return a new array of processed values (a map)
+          process: "map",
+          itemsObject: "geoJSON",
+          itemsProperties: "features",
+          // Return a new object for each item with the given properties
+          transformation: {
+            coordinates: "geometry.coordinates",
+            properties: "properties"
+          }
         }
       }
-    }
-  }]
-};
+    }]
+  };
 
-var switchboardPoints = new VIZI.BlueprintSwitchboard(pointsConfig);
-switchboardPoints.addToWorld(world);
+  var switchboardPoints = new VIZI.BlueprintSwitchboard(pointsConfig);
+  switchboardPoints.addToWorld(world);
+})
 
 var clock = new VIZI.Clock();
 
