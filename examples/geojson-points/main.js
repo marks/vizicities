@@ -2,7 +2,7 @@ var world = new VIZI.World({
   viewport: document.querySelector("#vizicities-viewport"),
   layersUI: true,
   picking: true,
-  center: new VIZI.LatLon(39, -77) // Silver Spring, MD
+  center: new VIZI.LatLon(38.9966, -77.0304) // Silver Spring, MD
 });
 
 var controls = new VIZI.ControlsMap(world.camera, {
@@ -171,7 +171,7 @@ var pointsConfig = {
     type: "BlueprintOutputPoints",
     options: {
       name: "Restauraunt Inspections",
-      color: 0x00ff00,
+      defaultColor: 0x00ff00,
       width: 5,
       height: 40,
       depth: 5

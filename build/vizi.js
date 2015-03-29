@@ -10094,7 +10094,7 @@ if (typeof window === undefined) {
 
     _.defaults(self.options, {
       name: "Points",
-      color: 0xff0000,
+      defaultColor: 0xff0000,
       width: 40,
       height: 1000,
       depth: 40
@@ -10141,15 +10141,19 @@ if (typeof window === undefined) {
 
     _.each(data, function(point) {
 
-        var combinedGeom = new THREE.Geometry();
+      var combinedGeom = new THREE.Geometry();
 
-        var material = new THREE.MeshBasicMaterial({
-          color: self.options.color,
-          // vertexColors: THREE.VertexColors,
-          // ambient: 0xffffff,
-          // emissive: 0xcccccc,
-          shading: THREE.FlatShading
-        });
+      if(point.properties.color === undefined){
+        point.properties.color = self.options.defaultColor
+      }
+
+      var material = new THREE.MeshBasicMaterial({
+        color: point.properties.color,
+        vertexColors: THREE.VertexColors,
+        ambient: 0xffffff,
+        emissive: 0xcccccc,
+        shading: THREE.FlatShading
+      });
 
 
       var coords = point.coordinates;
@@ -10178,42 +10182,25 @@ if (typeof window === undefined) {
       mesh.matrixAutoUpdate && mesh.updateMatrix();
       combinedGeom.merge(mesh.geometry, mesh.matrix);
 
-        // Move merged geom to 0,0 and return offset
-        var offset = combinedGeom.center();
+      // Move merged geom to 0,0 and return offset
+      var offset = combinedGeom.center();
 
-        var combinedMesh = new THREE.Mesh(combinedGeom, material);
+      var combinedMesh = new THREE.Mesh(combinedGeom, material);
 
-        // Use previously calculated offset to return merged mesh to correct position
-        // This allows frustum culling to work correctly
-        combinedMesh.position.x = -1 * offset.x;
+      // Use previously calculated offset to return merged mesh to correct position
+      // This allows frustum culling to work correctly
+      combinedMesh.position.x = -1 * offset.x;
 
-        // Removed for scale center to be correct
-        // Offset with applyMatrix above
-        combinedMesh.position.y = -1 * offset.y;
+      // Removed for scale center to be correct
+      // Offset with applyMatrix above
+      combinedMesh.position.y = -1 * offset.y;
 
-        combinedMesh.position.z = -1 * offset.z;
+      combinedMesh.position.z = -1 * offset.z;
 
-        self.add(combinedMesh);
-
+      self.add(combinedMesh);
 
     });
 
-    // // Move merged geom to 0,0 and return offset
-    // var offset = combinedGeom.center();
-
-    // var combinedMesh = new THREE.Mesh(combinedGeom, material);
-
-    // // Use previously calculated offset to return merged mesh to correct position
-    // // This allows frustum culling to work correctly
-    // combinedMesh.position.x = -1 * offset.x;
-
-    // // Removed for scale center to be correct
-    // // Offset with applyMatrix above
-    // combinedMesh.position.y = -1 * offset.y;
-
-    // combinedMesh.position.z = -1 * offset.z;
-
-    // self.add(combinedMesh);
   };
 
   VIZI.BlueprintOutputPoints.prototype.onAdd = function(world) {

@@ -19,7 +19,7 @@
 
     _.defaults(self.options, {
       name: "Points",
-      color: 0xff0000,
+      defaultColor: 0xff0000,
       width: 40,
       height: 1000,
       depth: 40
@@ -68,8 +68,12 @@
 
       var combinedGeom = new THREE.Geometry();
 
+      if(point.properties.color === undefined){
+        point.properties.color = self.options.defaultColor
+      }
+
       var material = new THREE.MeshBasicMaterial({
-        color: self.options.color,
+        color: point.properties.color,
         // vertexColors: THREE.VertexColors,
         // ambient: 0xffffff,
         // emissive: 0xcccccc,
