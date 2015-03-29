@@ -54,14 +54,6 @@
   VIZI.BlueprintOutputPoints.prototype.outputPoints = function(data) {
     var self = this;
 
-    var material = new THREE.MeshBasicMaterial({
-      color: self.options.color,
-      // vertexColors: THREE.VertexColors,
-      // ambient: 0xffffff,
-      // emissive: 0xcccccc,
-      shading: THREE.FlatShading
-    });
-
     var barGeom = new THREE.BoxGeometry( self.options.width, 1, self.options.depth );
 
     // Shift each vertex by half the bar height
@@ -71,9 +63,20 @@
       vertices[v].y += 0.5;
     }
 
-    var combinedGeom = new THREE.Geometry();
 
     _.each(data, function(point) {
+
+      var combinedGeom = new THREE.Geometry();
+
+      var material = new THREE.MeshBasicMaterial({
+        color: self.options.color,
+        // vertexColors: THREE.VertexColors,
+        // ambient: 0xffffff,
+        // emissive: 0xcccccc,
+        shading: THREE.FlatShading
+      });
+
+
       var coords = point.coordinates;
 
       var offset = new VIZI.Point();
@@ -99,24 +102,26 @@
 
       mesh.matrixAutoUpdate && mesh.updateMatrix();
       combinedGeom.merge(mesh.geometry, mesh.matrix);
+
+      // Move merged geom to 0,0 and return offset
+      var offset = combinedGeom.center();
+
+      var combinedMesh = new THREE.Mesh(combinedGeom, material);
+
+      // Use previously calculated offset to return merged mesh to correct position
+      // This allows frustum culling to work correctly
+      combinedMesh.position.x = -1 * offset.x;
+
+      // Removed for scale center to be correct
+      // Offset with applyMatrix above
+      combinedMesh.position.y = -1 * offset.y;
+
+      combinedMesh.position.z = -1 * offset.z;
+
+      self.add(combinedMesh);
+
     });
 
-    // Move merged geom to 0,0 and return offset
-    var offset = combinedGeom.center();
-
-    var combinedMesh = new THREE.Mesh(combinedGeom, material);
-
-    // Use previously calculated offset to return merged mesh to correct position
-    // This allows frustum culling to work correctly
-    combinedMesh.position.x = -1 * offset.x;
-
-    // Removed for scale center to be correct
-    // Offset with applyMatrix above
-    combinedMesh.position.y = -1 * offset.y;
-
-    combinedMesh.position.z = -1 * offset.z;
-
-    self.add(combinedMesh);
   };
 
   VIZI.BlueprintOutputPoints.prototype.onAdd = function(world) {
