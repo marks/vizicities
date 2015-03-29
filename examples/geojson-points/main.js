@@ -165,6 +165,12 @@ d3.json("./data/sample.geojson", function(geoJsonObject){
   _.each(geoJsonObject.features, function(point){
     if(point.properties.inspectionresults == "Critical Violations Corrected"){
       point.properties.pointColor = 0xffff00
+    } else if(point.properties.inspectionresults == "Facility Closed"){
+      point.properties.pointColor = 0xff0000
+    } else if(point.properties.inspectionresults == "No Critical Violations Noted"){
+      point.properties.pointColor = 0x00ff00
+    } else {
+      point.properties.pointColor = 0x000000
     }
   });
   var pointsConfig = {
